@@ -1,11 +1,10 @@
 require('dotenv').config();
 
-const express = require ('express');
+const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const path = require('path');
-
 const sauceRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
@@ -16,11 +15,16 @@ app.use(express.json());
 // Protection contre certaines vulnérabilité connues
 app.use(helmet());
 
+
+const uri = 'mongodb+srv://yacineboukhari:yacine59@cluster0.gtfnfom.mongodb.net/test'
+
 // Connexion à la base de données
-mongoose.connect('mongodb+srv://' + process.env.MDB_user + ':' + process.env.MDB_pw + '@pfdw13.egmg9.mongodb.net/pfdw13piiquante?retryWrites=true&w=majority',
-    { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
     .then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(() => console.log('Connexion à MongoDB échouée !'));
+    .catch(console.log);
 
 // Pour empêcher les erreurs de CORS
 app.use((req, res, next) => {
