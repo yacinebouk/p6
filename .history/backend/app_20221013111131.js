@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(helmet());
 
 // Connexion à la base de données
-mongoose.connect("mongodb+srv://yacineboukhari:yacine59@cluster0.gtfnfom.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect('mongodb+srv://jimbob:<PASSWORD>@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
