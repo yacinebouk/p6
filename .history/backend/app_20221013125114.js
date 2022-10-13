@@ -11,13 +11,9 @@ const userRoutes = require('./routes/user');
 
 
 const app = express();
+app.use('/api/stuff', stuffRoutes);
+app.use('/api/auth', userRoutes);
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    next();
-});
 
 app.use(express.json());
 
@@ -33,13 +29,13 @@ mongoose.connect("mongodb+srv://yacineboukhari:yacine59@cluster0.gtfnfom.mongodb
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 // Pour empêcher les erreurs de CORS
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-//     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-//     next();
-// });
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    next();
+});
 
 // Protection contre l'injection en remplaçant les caractères interdits
 app.use(mongoSanitize({

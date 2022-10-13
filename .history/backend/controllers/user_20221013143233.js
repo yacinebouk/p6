@@ -6,9 +6,9 @@ const validator = require('validator');
 /* Fonction d'inscription */
 exports.signup = (req, res, next) => {
     // Vérification de la validité de l'adresse email et salage du mot de passe
-    if (validator.isEmail(req.body.email, { blacklisted_chars: '$="' })) {
-        bcrypt.hash(req.body.password, 10)
-            .then(hash => {
+    //if (validator.isEmail(req.body.email, { blacklisted_chars: '$="' })) {
+    bcrypt.hash(req.body.password, 10)
+        .then(hash => {
                 const user = new User({
                     email: req.body.email,
                     password: hash
@@ -18,24 +18,25 @@ exports.signup = (req, res, next) => {
                         res.status(201).json({ message: 'Utilisateur créé' }))
                     .catch(error => res.status(400).json({ error }));
 
-            })
-    } else {
-        res.status(500).json({ error: "Le format de l'adresse email est invalide" });
-    }
-
+            } // } else {
+            //     res.status(500).json({ error: "Le format de l'adresse email est invalide" });
+            //}
+        )
 };
 
 /* Fonction de connexion */
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
-            // Vérification de l'email utilisateur
+            console.log('ihiqf')
+                // Vérification de l'email utilisateur
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur ou Mot de passe incorrect' });
             } else {
                 // Vérification du mot de passe
                 bcrypt.compare(req.body.password, user.password)
                     .then(valid => {
+                        console.log(valid)
                         if (!valid) {
                             return res.status(401).json({ error: 'Utilisateur ou Mot de passe incorrect' });
                         } else {
@@ -52,5 +53,5 @@ exports.login = (req, res, next) => {
                     .catch(error => res.status(500).json({ error }));
             };
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => res.status(500).then(console.log));
 };

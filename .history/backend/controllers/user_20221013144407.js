@@ -2,13 +2,13 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
-
+require("dotenv").config();
 /* Fonction d'inscription */
 exports.signup = (req, res, next) => {
     // Vérification de la validité de l'adresse email et salage du mot de passe
-    if (validator.isEmail(req.body.email, { blacklisted_chars: '$="' })) {
-        bcrypt.hash(req.body.password, 10)
-            .then(hash => {
+    //if (validator.isEmail(req.body.email, { blacklisted_chars: '$="' })) {
+    bcrypt.hash(req.body.password, 10)
+        .then(hash => {
                 const user = new User({
                     email: req.body.email,
                     password: hash
@@ -18,11 +18,10 @@ exports.signup = (req, res, next) => {
                         res.status(201).json({ message: 'Utilisateur créé' }))
                     .catch(error => res.status(400).json({ error }));
 
-            })
-    } else {
-        res.status(500).json({ error: "Le format de l'adresse email est invalide" });
-    }
-
+            } // } else {
+            //     res.status(500).json({ error: "Le format de l'adresse email est invalide" });
+            //}
+        )
 };
 
 /* Fonction de connexion */
@@ -40,6 +39,8 @@ exports.login = (req, res, next) => {
                             return res.status(401).json({ error: 'Utilisateur ou Mot de passe incorrect' });
                         } else {
                             // Si ok validation de la connexion et attribution d'un token d'authentifcation
+
+                            console.log(process.env.SECRET_TOKEN)
                             let token = jwt.sign({ userId: user._id },
                                 process.env.SECRET_TOKEN, { expiresIn: '24h' }
                             );

@@ -5,10 +5,10 @@ const app = require('./app');
 const normalizePort = val => {
     const port = parseInt(val, 10);
 
-    if (isNaN(port)) {
+    if(isNaN(port)) {
         return val;
     }
-    if (port >= 0) {
+    if(port >= 0) {
         return port;
     }
     return false;
@@ -19,7 +19,7 @@ app.set('port', port);
 
 // création de la fonction pour la gestion des erreurs
 const errorHandler = error => {
-    if (error.syscall !== 'listen') {
+    if(error.syscall !== 'listen') {
         throw error;
     }
 
