@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(helmet());
 
 // Connexion à la base de données
-mongoose.connect('mongodb+srv://yacineboukhari:<yacine59>@cluster0.gtfnfom.mongodb.net/test', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb + srv:yacineboukhari:yacine59@cluster0.gtfnfom.mongodb.net/test', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
