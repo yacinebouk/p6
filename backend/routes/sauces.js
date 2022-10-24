@@ -12,7 +12,7 @@ router.post('', auth, multer, sauceCtrl.createSauce);
 router.get('/:id', auth, sauceCtrl.getOneSauce);
 
 // Route pour l'affihage de toutes les sauces
-router.get('', auth, sauceCtrl.getAllSauces);
+router.get('', auth, multer, sauceCtrl.getAllSauces);
 
 // Route pour la modification d'une sauce
 router.put('/:id', auth, idCompare, multer, sauceCtrl.modifySauce);
